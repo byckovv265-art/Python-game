@@ -12,18 +12,35 @@ class Persone:
         self.player_pos = pygame.Vector2(x, y)
         self.speed_y = 0
     
-    def handle_frame(self, keys, dt):
+    def handle_frame(self, keys, dt, bullet):
         
         if keys[pygame.K_w]:
+            vy = self.player_pos.y
             if self.player_pos.y == FLOOR_Y:
                 self.speed_y -= 2600
+                if keys[pygame.K_LSHIFT]:
+                    vx = 600
+
             # self.player_pos.y -= 1000 * dt
         # if keys[pygame.K_s]:
         #     self.player_pos.y += 300 * dt
         if keys[pygame.K_a]:
-            self.player_pos.x -= 300 * dt
+            vx = 300
+            if keys[pygame.K_LSHIFT]:
+                vx = 600
+            self.player_pos.x -= vx * dt
         if keys[pygame.K_d]:
-            self.player_pos.x += 300 * dt
+            vx = 300
+            if keys[pygame.K_LSHIFT]:
+                vx = 600        
+            self.player_pos.x += vx * dt
+        if keys[pygame.K_SPACE]:
+            bullet.x = self.player_pos.x + 300
+            bullet.y = self.player_pos.y + 230
+
+
+
+
 
         # обновляем положение по y
         self.player_pos.y += self.speed_y * dt
